@@ -5,7 +5,10 @@
 #!r6rs
 
 (import (rnrs base)
+        (srfi :19)
         (snoopy calendar)
         (snoopy printer))
 
-(display-date 6 (cadr (past-calendar-years 2020 1960)))
+(let ((date (current-date)))
+  (display-date (date-month date)
+                (get-random-past-year (date-year date))))

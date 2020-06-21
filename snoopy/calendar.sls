@@ -2,7 +2,9 @@
 ;; SPDX-License-Identifier: MPL-2.0
 (library (snoopy calendar)
   (export future-calendar-years
-          past-calendar-years)
+          past-calendar-years
+          get-random-future-year
+          get-random-past-year)
   (import (rnrs base)
           (rnrs r5rs)
           (snoopy util))
@@ -21,17 +23,24 @@
   (define xnor boolean=?)
 
   (define (distant-calendar-years from until increment compare?)
-    (let loop ((year from) (remainders 0))
-      (cond
-       ((compare? year until)
-        '())
-       ((and (divisible? remainders 7) (xnor (leap? year) (leap? from)))
-        (cons year (loop (increment year) (remainder-days year))))
-       (else
-        (loop (increment year) (+ remainders (remainder-days year)))))))
+    (cdr
+     (let loop ((year from) (remainders 0))
+       (cond
+        ((compare? year until)
+         '())
+        ((and (divisible? remainders 7) (xnor (leap? year) (leap? from)))
+         (cons year (loop (increment year) (remainder-days year))))
+        (else
+         (loop (increment year) (+ remainders (remainder-days year))))))))
 
   (define (future-calendar-years from until)
     (distant-calendar-years from until add1 >=))
 
   (define (past-calendar-years from until)
-    (distant-calendar-years from until sub1 <=)))
+    (distant-calendar-years from until sub1 <=))
+
+  (define (get-random-past-year year)
+    (list-ref-random (past-calendar-years year (- year 100))))
+
+  (define (get-random-future-year year)
+    (list-ref-random (future-calendar-years year (+ year 100)))))
