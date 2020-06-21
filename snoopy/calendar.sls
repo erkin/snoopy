@@ -1,16 +1,13 @@
 ;; -*- mode: scheme; coding: utf-8 -*-
 ;; SPDX-License-Identifier: MPL-2.0
 (library (snoopy calendar)
-  (export future-calendar-years
-          past-calendar-years
-          get-random-future-year
+  (export get-random-future-year
           get-random-past-year)
   (import (rnrs base)
-          (rnrs r5rs)
           (snoopy util))
 
   (define (divisible? x y)
-    (and (zero? (remainder x y))))
+    (and (zero? (mod x y))))
 
   (define (leap? year)
     (or (divisible? year 400)

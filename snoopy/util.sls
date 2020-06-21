@@ -28,12 +28,6 @@
     (list-ref lst ((random-source-make-integers random-source)
                    (length lst))))
 
-  ;; (define (with-output-to-string thunk)
-  ;;   (let ((out (open-output-string)))
-  ;;     (parameterize ((current-output-port out))
-  ;;       (thunk))
-  ;;     (get-output-string out)))
-
   ;; (define (get-screen-size)
   ;;   (->> (λ () (system "stty size"))
   ;;        with-output-to-string

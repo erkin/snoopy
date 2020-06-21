@@ -32,6 +32,9 @@
                        april   may      june
                        july    august   september
                        october november december))
+  (define weekdays '("SUNDAY" "MONDAY" "TUESDAY"
+                     "WEDNESDAY" "THURSDAY"
+                     "FRIDAY" "SATURDAY"))
 
   (define (get-digit n)
     (list-ref digits n))
@@ -64,7 +67,7 @@
        (list (digit-above (list-ref digits 2))
              (digit-below (list-ref digits 3))))))
 
-  (define (display-letters month)
+  (define (display-letters word)
     (define (display-row str)
       (display #\space)
       (display str)
@@ -74,7 +77,7 @@
       (for-each
        (λ (strs)
          (display-row (list-ref strs i)))
-       month)
+       word)
       (newline)))
 
   (define (letterise-date month-number year-number)
@@ -89,5 +92,13 @@
           (append year-fst margin month margin year-lst)))))
 
   (define (display-date month year)
-    (display-letters (letterise-date month year))))
-
+    (display-letters (letterise-date month year))
+    (newline)
+    (for-each
+     (λ (weekday)
+       (display blank-letter-row)
+       (display weekday)
+       (display blank-letter-row))
+     weekdays)
+    (newline)
+    (newline)))
