@@ -1,0 +1,3 @@
+* Snoopy calendar
+
+A potential Scheme rewrite of the infamous Snoopy calendar.
