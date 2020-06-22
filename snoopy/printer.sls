@@ -3,7 +3,7 @@
 (library (snoopy printer)
   (export display-date)
   (import (rnrs)
-          (only (srfi :1) make-list)
+          (only (srfi :1) make-list fold)
           (snoopy letters)
           (snoopy util))
 
@@ -13,25 +13,22 @@
   (define blank-letter (make-list 7 blank-letter-row))
   (define blank-digit (make-list 5 blank-digit-row))
 
-  (define january (list j a n u a r y))
-  (define february (list f e b r u a r y))
-  (define march (list m a r c h))
-  (define april (list a p r i l))
-  (define may (list m a y))
-  (define june (list j u n e))
-  (define july (list j u l y))
-  (define august (list a u g u s t))
-  (define september (list s e p t e m b e r))
-  (define october (list o c t o b e r))
-  (define november (list n o v e m b e r))
-  (define december (list d e c e m b e r))
-
   (define digits (list zero one two three four five
                        six seven eight nine))
-  (define months (list january february march
-                       april   may      june
-                       july    august   september
-                       october november december))
+  (define months
+    (list
+     (list j a n u a r y)
+     (list f e b r u a r y)
+     (list m a r c h)
+     (list a p r i l)
+     (list m a y)
+     (list j u n e)
+     (list j u l y)
+     (list a u g u s t)
+     (list s e p t e m b e r)
+     (list o c t o b e r)
+     (list n o v e m b e r)
+     (list d e c e m b e r)))
   (define weekdays '("SUNDAY" "MONDAY" "TUESDAY"
                      "WEDNESDAY" "THURSDAY"
                      "FRIDAY" "SATURDAY"))
@@ -57,10 +54,11 @@
                   blank-digit-row)))
 
   (define (number->digits n)
-    (let ((digits (map
-                   (λ (char)
-                     (get-digit (string->number (string char))))
-                   (string->list (number->string n)))))
+    (let ((digits
+           (map
+            (λ (char)
+              (get-digit (string->number (string char))))
+            (string->list (number->string n)))))
       (values
        (list (digit-below (list-ref digits 0))
              (digit-above (list-ref digits 1)))
@@ -68,17 +66,18 @@
              (digit-below (list-ref digits 3))))))
 
   (define (display-letters word)
-    (define (display-row str)
-      (display #\space)
-      (display str)
-      (display #\space))
-    (do ((i 0 (add1 i)))
-        ((= i 7))         ; Each letter is exactly seven strings long.
-      (for-each
-       (λ (strs)
-         (display-row (list-ref strs i)))
-       word)
-      (newline)))
+    (let loop ((letters word))
+      (unless (null? (car letters))
+        (newline)
+        (loop
+         (reverse
+          (fold (λ (strs acc)
+                  (display #\space)
+                  (display (car strs))
+                  (display #\space)
+                  (cons (cdr strs) acc))
+                '() letters)))))
+    (newline))
 
   (define (letterise-date month-number year-number)
     (call-with-values
@@ -96,9 +95,10 @@
     (newline)
     (for-each
      (λ (weekday)
-       (display blank-letter-row)
+       (display (make-string 5 #\space))
        (display weekday)
-       (display blank-letter-row))
+       (display (make-string 5 #\space)))
      weekdays)
     (newline)
-    (newline)))
+    (newline)
+    ))
