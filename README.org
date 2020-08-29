@@ -1,3 +1,10 @@
 * Snoopy calendar
+  A Scheme rewrite of the infamous Snoopy calendar, which was originally written
+  in 1960s. The shtick is that it picks a random year in the near past whose
+  calendar matches this year's and displays that. (eg 1964 in 2020)
 
-A potential Scheme rewrite of the infamous Snoopy calendar.
+  Requires SRFIs 1, 19 (to get the current date) and 27 (to randomise past
+  years).
+
+  Currently lacks actual Snoopy art because I don't know how to obtain that
+  legally.
