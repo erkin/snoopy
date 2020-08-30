@@ -39,7 +39,7 @@ unless noted otherwise.
 
 (define (run month year)
   (if (and (number? month) (> month 0) (< month 13)
-           (number? year) (> year 0))
+           (number? year) (> year 1100) (< year 10000))
       (display-date month (get-random-past-year year))
       (usage)))
 
