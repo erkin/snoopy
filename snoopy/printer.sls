@@ -6,6 +6,7 @@
           (only (srfi :1) fold iota make-list)
           (snoopy calendar)
           (snoopy letters)
+          (snoopy pics)
           (snoopy util))
 
   (define (make-blank-letter x y)
@@ -109,7 +110,7 @@
             (append (make-list first-weekday
                                (list blank-digit blank-digit))
                     (map number->digits (iota month-length 1))
-                    (make-list (mod (- 42 (+ month-length first-weekday)) 7)
+                    (make-list (- 42 (+ month-length first-weekday))
                                (list blank-digit blank-digit))))
        7)))
 
@@ -128,6 +129,10 @@
                      rows))))))
 
   (define (display-date month year)
+    ;; Print the picture for the month
+    (display (get-pic month))
+    (newline)
+
     ;; Print split year and month name
     (printer (letterise-date month year)
              "\n" " " " ")
@@ -142,20 +147,20 @@
      weekdays)
 
     ;; Draw top line of the calendar grid
-    (display "\n |")
+    (display "\n I")
     (do-times 7
-              (display (make-string 18 #\-))
-              (display #\|))
+      (display (make-string 18 #\-))
+      (display #\I))
 
     ;; Draw the rest of the calendar
     (for-each
      (λ (week)
        ;; Days
-       (printer week "\n |" "    " "   |")
-       (display "\n |")
+       (printer week "\n I" "    " "   I")
+       (display "\n I")
        ;; Lines between rows
        (do-times 7
-                 (display (make-string 18 #\-))
-                 (display #\|)))
+         (display (make-string 18 #\-))
+         (display #\I)))
      (letterise-days month year))
     (newline)))
