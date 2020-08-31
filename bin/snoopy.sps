@@ -27,7 +27,7 @@
    '(#\v "version") #f #f
    (λ _
      (display
-      "snoopy v0.1
+      "snoopy v0.0.1
 Copyright (C) 2020 Erkin Batu Altunbaş
 
 Each file of this project's source code is subject
@@ -44,9 +44,8 @@ unless noted otherwise.
       (usage)))
 
 (define (main args)
-  (let ((len (length args))
-        (date (current-date)))
-    (case len
+  (let ((date (current-date)))
+    (case (length args)
       ((0) (run (date-month date) (date-year date)))
       ((1) (run (car args) (date-year date)))
       ((2) (run (cadr args) (car args)))

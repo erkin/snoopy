@@ -11,15 +11,6 @@
           (only (srfi :1) split-at)
           (srfi :27))
 
-  (define-syntax ->>
-    (syntax-rules ()
-      ((_ val)
-       val)
-      ((_ val (fun args ...) rest ...)
-       (->> (fun args ... val) rest ...))
-      ((_ val fun rest ...)
-       (->> (fun val) rest ...))))
-
   (define-syntax λ
     (syntax-rules ()
       ((λ . body) (lambda . body))))
@@ -65,15 +56,7 @@
   (define random-source (make-random-source))
 
   (define (list-ref-random lst)
-    "Pick a random element from `lst'"
+    "Pick a random element from `lst'."
     (random-source-randomize! random-source)
     (list-ref lst ((random-source-make-integers random-source)
-                   (length lst))))
-
-  ;; (define (get-screen-size)
-  ;;   (->> (λ () (system "stty size"))
-  ;;        with-output-to-string
-  ;;        string-split
-  ;;        (map string->number)
-  ;;        (apply values)))
-  )
+                   (length lst)))))
