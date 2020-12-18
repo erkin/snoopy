@@ -1,9 +1,16 @@
 * Snoopy calendar
-  A Scheme rewrite of the infamous Snoopy calendar, which was
-  originally written in 1960s. The shtick is that it picks a random
-  year in the near past whose calendar matches this year's and
-  displays that. (eg 1964 in 2020)
+  A Scheme rewrite of the infamous Snoopy calendar, which was originally written
+  in 1960s. The shtick is that it picks a random year in the near past whose
+  calendar matches this year's and displays that. (eg 1964 in 2020)
 
-  Requires an R6RS conformant Scheme and SRFIs 1, 19 (to get the
-  current date), 27 (to randomise past years) and 37 (to parse command
-  line arguments).
+  Requires an [[http://www.r6rs.org/][R6RS]] conformant Scheme (although it could be trivially ported to
+  [[https://small.r7rs.org/][R7RS Small]]) and SRFIs 1, 19 (to get the current date), 27 (to randomise past
+  years) and 37 (to parse command line arguments).
+
+  [[https://akkuscm.org/][Akku]] can aid you with dependencies:
+  #+BEGIN_SRC sh
+  % akku lock
+  % akku install
+  % .akku/env
+  % bin/snoopy.sps
+  #+END_SRC

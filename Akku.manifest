@@ -1,8 +1,8 @@
 #!r6rs ; -*- mode: scheme; coding: utf-8 -*-
 (import (akku format manifest))
 
-(akku-package ("snoopy" "0.0.1")
+(akku-package ("snoopy" "1.0.0")
   (synopsis "Snoopy calendar")
-  (authors "Erkin Batu Altunbas")
+  (authors "Lulu")
   (license "MPL-2.0")
   (depends ("chez-srfi" ">=0.0.0-akku <1.0.0")))
